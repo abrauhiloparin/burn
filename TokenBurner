@@ -1,0 +1,19 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "./IERC20.sol"; // Импортируем интерфейс ERC20
+
+contract TokenBurner {
+    IERC20 private token; // Объявляем переменную для адреса контракта ERC20
+
+    event TokenBurned(address indexed from, uint256 amount); // Событие, генерируемое при сжигании токена
+
+    constructor(address tokenAddress) {
+        token = IERC20(tokenAddress); // Инициализируем переменную контракта ERC20
+    }
+
+    function burnToken(uint256 amount) external {
+        token.burn(msg.sender, amount); // Вызываем функцию сжигания токена в контракте ERC20
+        emit TokenBurned(msg.sender, amount); // Генерируем событие сжигания токена
+    }
+}
